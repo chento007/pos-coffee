@@ -19,7 +19,11 @@ export class Product extends CommonEntity {
   })
   description: string;
 
-  @Column('double precision', { precision: 6, scale: 2 })
+  @Column({
+    type: 'numeric',
+    precision: 6,
+    scale: 2
+  })
   price: number;
 
   // @Column({
