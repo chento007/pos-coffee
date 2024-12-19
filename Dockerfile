@@ -31,7 +31,7 @@ COPY --from=build /usr/src/app/package*.json /usr/src/app/
 RUN npm install --production
 
 # Expose the port on which the app will run
-EXPOSE 3001
+EXPOSE 3000
 
 # Start the server using the production build
 CMD ["npm", "run", "start:prod"]
