@@ -15,10 +15,10 @@ services:
       - DB_TYPE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
-      - DB_HOST=postgres  # Use the service name for Docker internal communication
-      - DB_PORT=5432      # Standard PostgreSQL port
+      - DB_HOST=postgres 
+      - DB_PORT=5432
       - DB_DATABASE=mydatabase
-      - DB_SYNC=false
+      - DB_SYNC=true
 
       # JWT Authentication
       - JWT_SECRET_KEY=cdw7232hidwuy23232wefewfs1213
