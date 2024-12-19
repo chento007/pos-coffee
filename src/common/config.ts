@@ -7,7 +7,7 @@ export async function typeormConfig(configService: ConfigService): Promise<TypeO
   if (env === 'dev') {
     return {
       type: configService.get<string>('DB_TYPE'),
-      host: configService.get<string>('DB_HOST'), // Use the service name here
+      host: configService.get<string>('DB_HOST'),
       port: configService.get<string>('DB_PORT'),
       username: configService.get<string>('DB_USERNAME'),
       password: configService.get<string>('DB_PASSWORD'),
@@ -17,8 +17,8 @@ export async function typeormConfig(configService: ConfigService): Promise<TypeO
       migrationsRun: false,
       dropSchema: false,
       logging: true,
+      logger: 'advanced-console',
       entities: [join(__dirname, './../**/**.entity{.ts,.js}')],
     } as TypeOrmModuleAsyncOptions;
   }
-  // Optionally, you can add more environments or a default configuration
 }
