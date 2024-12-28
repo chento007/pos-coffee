@@ -17,7 +17,7 @@ services:
       - DB_PASSWORD=password
       - DB_HOST=postgres  # This should match the name of the Postgres service (not the external IP or localhost)
       - DB_PORT=5432
-      - DB_DATABASE=postgres  # This matches the Postgres database name
+      - DB_DATABASE=postgres-1  # This matches the Postgres database name
       - DB_SYNC=false  # If you want to auto-sync the database schema (recommended to set to false for production)
 
       # JWT Authentication

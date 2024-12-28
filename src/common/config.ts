@@ -13,7 +13,7 @@ export async function typeormConfig(configService: ConfigService): Promise<TypeO
       password: configService.get<string>('DB_PASSWORD'),
       database: configService.get<string>('DB_DATABASE'),
       maxQueryExecutionTime: 3000,
-      synchronize: false,
+      synchronize: true,
       migrationsRun: true,
       dropSchema: false,
       logging: false,
