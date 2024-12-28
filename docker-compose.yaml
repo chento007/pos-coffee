@@ -6,19 +6,19 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"  # Assuming your NestJS app runs on port 3000 internally
+      - "3000:3000"  # Exposes your NestJS app on port 3000
     environment:
       - APP_ENV=dev
       - APP_URL=http://localhost
 
-      # Database Configuration
+      # Database Configuration (ensure this matches your Postgres setup)
       - DB_TYPE=postgres
       - DB_USERNAME=postgres
       - DB_PASSWORD=password
-      - DB_HOST=postgres  # This should match the name of the Postgres service
+      - DB_HOST=postgres  # This should match the name of the Postgres service (not the external IP or localhost)
       - DB_PORT=5432
-      - DB_DATABASE=mydatabase  # This should match the name of the DB in Postgres
-      - DB_SYNC=false
+      - DB_DATABASE=mydatabase  # This matches the Postgres database name
+      - DB_SYNC=false  # If you want to auto-sync the database schema (recommended to set to false for production)
 
       # JWT Authentication
       - JWT_SECRET_KEY=cdw7232hidwuy23232wefewfs1213
@@ -26,7 +26,7 @@ services:
       - JWT_EXPIRATION_TIME=1h
       - JWT_REFRESH_EXPIRATION_TIME=1d
 
-      # Telegram Bot Token
+      # Telegram Bot Token (this is a sensitive token, consider storing it in a more secure way)
       - TELEGRAM_BOT_TOKEN=7704950124:AAGw6pxOlut_-iWnc3ZJxEHx99yt67MaLUY
     networks:
       - nestjs-net
@@ -38,11 +38,11 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydatabase  # This should match the DB configured in the app service
+      POSTGRES_DB: mydatabase  # Ensure this is the same as DB_DATABASE in the app
     ports:
-      - "5438:5432"  # External port 5438, internal port 5432
+      - "5438:5432"  # Exposes Postgres container on host port 5438, internal port 5432
     volumes:
-      - postgres-data:/var/lib/postgresql/data  # Persists data across restarts
+      - postgres-data:/var/lib/postgresql/data  # Persists data across container restarts
     networks:
       - nestjs-net
 
@@ -51,4 +51,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres-data:
+  postgres-data:  # Declares a named volume for persisting Postgres data
