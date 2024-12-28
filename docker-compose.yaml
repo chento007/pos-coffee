@@ -1,35 +1,35 @@
 version: '3.8'
 
 services:
-  # app:
-  #   build:
-  #     context: .  
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "3000:3000"  # Assuming your NestJS app runs on port 3000 internally
-  #   environment:
-  #     - APP_ENV=dev
-  #     - APP_URL=http://localhost
+  app:
+    build:
+      context: .  
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"  # Assuming your NestJS app runs on port 3000 internally
+    environment:
+      - APP_ENV=dev
+      - APP_URL=http://localhost
 
-  #     # Database Configuration
-  #     - DB_TYPE=postgres
-  #     - DB_USERNAME=postgres
-  #     - DB_PASSWORD=password
-  #     - DB_HOST=postgres 
-  #     - DB_PORT=5432 
-  #     - DB_DATABASE=postgres
-  #     - DB_SYNC=false
+      # Database Configuration
+      - DB_TYPE=postgres
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+      - DB_HOST=postgres 
+      - DB_PORT=5432 
+      - DB_DATABASE=postgres
+      - DB_SYNC=false
 
-  #     # JWT Authentication
-  #     - JWT_SECRET_KEY=cdw7232hidwuy23232wefewfs1213
-  #     - JWT_REFRESH_SECRET=cdw7232hidwuy23232wefewfs1213
-  #     - JWT_EXPIRATION_TIME=1h
-  #     - JWT_REFRESH_EXPIRATION_TIME=1d
+      # JWT Authentication
+      - JWT_SECRET_KEY=cdw7232hidwuy23232wefewfs1213
+      - JWT_REFRESH_SECRET=cdw7232hidwuy23232wefewfs1213
+      - JWT_EXPIRATION_TIME=1h
+      - JWT_REFRESH_EXPIRATION_TIME=1d
 
-  #     # Telegram Bot Token
-  #     - TELEGRAM_BOT_TOKEN=7704950124:AAGw6pxOlut_-iWnc3ZJxEHx99yt67MaLUY
-  #   networks:
-  #     - nestjs-net
+      # Telegram Bot Token
+      - TELEGRAM_BOT_TOKEN=7704950124:AAGw6pxOlut_-iWnc3ZJxEHx99yt67MaLUY
+    networks:
+      - nestjs-net
       
 
   postgres:
