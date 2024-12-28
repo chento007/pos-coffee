@@ -27,9 +27,13 @@ export class MockService {
 
   @Transactional()
   async mock(): Promise<boolean> {
+    console.log('start mock...');
+    
     const isExist = await this.roleService.hasOne();
 
     if (isExist) {
+      console.log('it exist can not mock');
+      
       return;
     }
 
