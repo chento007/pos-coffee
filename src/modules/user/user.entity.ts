@@ -1,5 +1,5 @@
 import { IsEmail } from 'class-validator';
-import { CommonEntity } from 'src/common/entity/common.entity';
+import { CommonEntity } from '../../common/entity/common.entity';
 import {
   Column,
   Entity,

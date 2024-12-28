@@ -15,7 +15,12 @@ export class CategoryService {
         private readonly categoryRepository: CategoryRepository
     ) { }
 
-
+    async hasOne(): Promise<boolean> {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, count] = await this.categoryRepository.findAndCount();
+        return count > 0;
+      }
+    
     public async findAll(): Promise<Category[]> {
         return await this.categoryRepository.find();
     }

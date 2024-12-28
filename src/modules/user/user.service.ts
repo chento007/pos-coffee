@@ -105,6 +105,34 @@ export class UsersService {
     return token;
   }
 
+  public async createUser(createUserDto: CreateUserDto): Promise<User> {
+    let { email, password, confirmedPassword, username, roleIds } = createUserDto;
+
+    const isEmilExsit = await this.userRepository.findOneBy({ email: email });
+    if (isEmilExsit) {
+      throw new BadRequestException('Email is already exist.');
+    }
+
+    const isUsernameExist = await this.userRepository.findAndCountBy({
+      username: username,
+    });
+    if (isEmilExsit) {
+      throw new BadRequestException('Username is already exist.');
+    }
+
+    password = await Hash.makeHash(password);
+
+    const roles = await this.roleService.findByIds(roleIds);
+
+    const user = await this.userRepository.save({ email, password, username, roles: roles });
+    
+    const token = await this.getTokens(user.id);
+    
+    await this.updateRefreshToken(user.id, token.refresh);
+
+    return user;
+  }
+
   public async update(id: number, createUserDto: updateUserDto): Promise<boolean> {
     const { email, username, roleIds, phone } = createUserDto;
 

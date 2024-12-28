@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, OnModuleInit } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/modules/auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -16,12 +16,14 @@ import { FileModule } from './modules/file/file.module';
 import { TelegramService } from './modules/telegraf/telegram.service';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { TelegramModule } from './modules/telegraf/telegram.module';
-
+import { InvoiceModule } from './modules/invoice/invoice.module';
+import { MockModule } from './mock/mock.module';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
     TelegrafModule.forRoot({
-      token: "7789482492:AAEyuyVUe3CmNrOF7SPHKyDrXC1TkBCU8mo",
+      token: '7789482492:AAEyuyVUe3CmNrOF7SPHKyDrXC1TkBCU8mo',
     }),
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -52,7 +54,9 @@ import { TelegramModule } from './modules/telegraf/telegram.module';
     CategoryModule,
     FileModule,
     CategoryModule,
-    TelegramModule
+    TelegramModule,
+    InvoiceModule,
+    MockModule,
   ],
   providers: [
     JwtStrategy,
@@ -61,10 +65,9 @@ import { TelegramModule } from './modules/telegraf/telegram.module';
       useClass: RolesGuard,
     },
     TelegramService,
-
+    AppService,
   ],
   exports: [JwtStrategy, PassportModule],
   controllers: [],
-
 })
-export class AppModule { }
+export class AppModule {}

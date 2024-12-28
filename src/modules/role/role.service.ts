@@ -1,45 +1,57 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Role } from "./role.entity";
-import { RoleRepository } from "./role.repository";
-import { Repository, In } from "typeorm";
-import { PageOptionsDto } from "src/common/dto/page-option.dto";
-import { PageDto } from "src/common/dto/page.dto";
-import { PageMetaDto } from "src/common/dto/page-meta.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Role } from './role.entity';
+import { RoleRepository } from './role.repository';
+import { Repository, In } from 'typeorm';
+import { PageOptionsDto } from 'src/common/dto/page-option.dto';
+import { PageDto } from 'src/common/dto/page.dto';
+import { PageMetaDto } from 'src/common/dto/page-meta.dto';
+import { AppRoles } from 'src/common/enum/roles.enum';
 
 @Injectable()
 export class RoleService {
-    constructor(
-        @InjectRepository(Role)
-        private readonly roleRepository: RoleRepository,
-    ) { }
+  constructor(
+    @InjectRepository(Role)
+    private readonly roleRepository: RoleRepository,
+  ) {}
 
-    async findByIds(ids: number[]): Promise<Role[]> {
-        return await this.roleRepository.find({
-            where: {
-                id: In(ids),
-            },
-        });
-    }
+  async hasOne(): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [_, count] = await this.roleRepository.findAndCount();
+    return count > 0;
+  }
 
-    public async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Role>> {
+  async findByIds(ids: number[]): Promise<Role[]> {
+    return await this.roleRepository.find({
+      where: {
+        id: In(ids),
+      },
+    });
+  }
 
-        const queryBuilder = this.roleRepository.createQueryBuilder("role");
+  async create(name: AppRoles) {
+    return this.roleRepository.save({ name: name });
+  }
 
-        const search = pageOptionsDto.search ? pageOptionsDto.search.toLowerCase() : '';
+  public async findAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Role>> {
+    const queryBuilder = this.roleRepository.createQueryBuilder('role');
 
-        const skip: number = (pageOptionsDto.page - 1) * pageOptionsDto.take;
+    const search = pageOptionsDto.search
+      ? pageOptionsDto.search.toLowerCase()
+      : '';
 
-        queryBuilder
-            .orderBy("role.createdAt", pageOptionsDto.order)
-            .where('LOWER(role.name) LIKE :search', { search: `%${search}%` })
-            .skip(skip)
-            .take(pageOptionsDto.take);
+    const skip: number = (pageOptionsDto.page - 1) * pageOptionsDto.take;
 
-        const itemCount = await queryBuilder.getCount();
-        const { entities } = await queryBuilder.getRawAndEntities();
+    queryBuilder
+      .orderBy('role.createdAt', pageOptionsDto.order)
+      .where('LOWER(role.name) LIKE :search', { search: `%${search}%` })
+      .skip(skip)
+      .take(pageOptionsDto.take);
 
-        const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
-        return new PageDto(entities, pageMetaDto);
-    }
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+    return new PageDto(entities, pageMetaDto);
+  }
 }

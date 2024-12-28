@@ -4,12 +4,8 @@ import { FileService } from './file.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-      
-  imports: [
-    ConfigModule,
-
-],
+  imports: [ConfigModule],
   controllers: [FileController],
-  providers: [FileService]
+  providers: [FileService],
 })
 export class FileModule {}

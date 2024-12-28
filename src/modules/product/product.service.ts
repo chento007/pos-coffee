@@ -42,6 +42,14 @@ export class ProductService {
         return !!product;
     }
 
+    async createProduct({ name, categoryId, description, price }: CreateProductDto): Promise<Product> {
+
+        const product = await this.productRepository.save({ name, categoryId, description, price });
+
+        return product;
+    }
+
+
     async update(id, { name, categoryId, description, price }: CreateProductDto): Promise<boolean> {
 
         const isIdExist = await this.isProductIdExist(id);

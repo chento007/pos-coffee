@@ -19,7 +19,16 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "migrate": "babel-node --extensions \".ts,.tsx\" node_modules/node-pg-migrate/bin/node-pg-migrate -f config/database",
-    "pkg": "pkg ."
+    "pkg": "pkg .",
+    "typeorm:sync": "npm run typeorm schema:sync",
+    "typeorm:drop": "npm run typeorm schema:drop",
+    "typeorm": "ts-node ./node_modules/typeorm/cli -d src/common/db.config.ts",
+    "migration:create": "ts-node ./node_modules/typeorm/cli migration:create src/migrations/${npm_config_name}",
+    "migration:generate": "npm run build && npm run typeorm migration:generate src/migrations/${npm_config_name}",
+    "migration:run": "npm run build && npm run typeorm migration:run",
+    "migration:revert": "npm run build && npm run typeorm migration:revert",
+    "migration:reset": "npm run typeorm:drop && npm run migration:run",
+    "typeorm:run": "npm run typeorm migration:run"
   },
   "pkg": {
     "scripts": "dist/**/*.js",
@@ -71,6 +80,7 @@
     "sequelize-typescript": "^2.1.6",
     "telegraf": "^4.16.3",
     "typeorm": "^0.3.19",
+    "typeorm-transactional": "^0.5.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

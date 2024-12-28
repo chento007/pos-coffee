@@ -1,4 +1,4 @@
-import { AppRoles } from 'src/common/enum/roles.enum';
+import { AppRoles } from '../../common/enum/roles.enum';
 import {
   Column,
   Entity,
@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
-import { CommonEntity } from 'src/common/entity/common.entity';
+import { CommonEntity } from '../../common/entity/common.entity';
 
 @Entity()
 export class Role extends CommonEntity {
