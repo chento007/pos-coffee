@@ -3,22 +3,14 @@ import { DataSource, DataSourceOptions } from 'typeorm';
 
 export const config = {
   default: {
-    host: process.env.DB_HOST || 'localhost',
-    port: Number(process.env.DB_PORT) || 5438,
-    database: process.env.DB_DATABASE || 'postgres-3',
-    username: process.env.DB_USERNAME || 'postgres',
-    password: process.env.DB_PASSWORD || 'password',
+    url: process.env.POSTGRES_URL || "postgres://default:X8xHf5QpMDNh@ep-dry-smoke-a1h06qcu-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require",
     reset: process.env.POSTGRES_RESET || false,
   },
 };
 
 export const options: DataSourceOptions = {
   type: 'postgres',
-  host: config.default.host,
-  port: config.default.port,
-  username: config.default.username,
-  password: config.default.password,
-  database: config.default.database,
+  url: config.default.url,
   ssl: false,
   logging: ["query", "error", "schema"],
   migrationsRun: true,
